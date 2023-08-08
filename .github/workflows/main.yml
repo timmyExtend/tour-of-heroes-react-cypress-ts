@@ -216,4 +216,4 @@ jobs:
         with:
           directory: coverage-cy/
           flags: cypress-ct-coverage
-          token: ${{ secrets.CODECOV_TOKEN }
+          token: ${{ secrets.CODECOV_TOKEN }}
