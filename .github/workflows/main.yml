@@ -17,6 +17,7 @@ jobs:
           node-version: 16
       - uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install dependencies
         uses: cypress-io/github-action@v5.1.0
@@ -56,12 +57,6 @@ jobs:
           directory: coverage/
           flags: jest-rtl-coverage
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   lint:
     needs: install-dependencies
@@ -193,15 +188,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create lcov code coverage report
-        run: |
-          yarn nyc report --reporter=lcov > coverage-cy/lcov.info
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #87.2% is from the cypress-ct-coverage
 
       # if you want to enable codecov
       - name: Upload artifacts (Coverage_step3)
