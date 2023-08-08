@@ -55,9 +55,18 @@ export default function HeroList({heroes, handleDeleteHero}: HeroListProps) {
     )
 
   /** filters the heroes data to see if the any of the properties exist in the list */
+  const handleSearch =
+    (data: Hero[]) => (event: ChangeEvent<HTMLInputElement>) => {
+      const searchField = event.target.value
+
+      return startTransition(() =>
+        setFilteredHeroes(searchProperties(searchField, data)),
+      )
+    }
+
   const testMe = (data: Hero[]) => (event: ChangeEvent<HTMLInputElement>) => {
     const searchField = event.target.value
-
+    console.log(data)
     return startTransition(() =>
       setFilteredHeroes(searchProperties(searchField, data)),
     )
