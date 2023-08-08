@@ -64,6 +64,14 @@ export default function HeroList({heroes, handleDeleteHero}: HeroListProps) {
       )
     }
 
+  const testMe = (data: Hero[]) => (event: ChangeEvent<HTMLInputElement>) => {
+    const searchField = event.target.value
+    console.log(data)
+    return startTransition(() =>
+      setFilteredHeroes(searchProperties(searchField, data)),
+    )
+  }
+
   return (
     <div
       style={{
@@ -74,7 +82,7 @@ export default function HeroList({heroes, handleDeleteHero}: HeroListProps) {
       {deferredHeroes.length > 0 && (
         <div className="card-content">
           <span>Search </span>
-          <input data-cy="search" onChange={handleSearch(deferredHeroes)} />
+          <input data-cy="search" onChange={testMe(deferredHeroes)} />
         </div>
       )}
       &nbsp;
